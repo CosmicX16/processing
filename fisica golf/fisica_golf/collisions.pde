@@ -1,6 +1,6 @@
 class collisions{
   
-  boolean hitBody(FBody b, FBody c){
+  public boolean hitBody(FBody b, FBody c){
     ArrayList<FContact> contacts = b.getContacts();
     int i = 0;
     while(i < contacts.size()){
