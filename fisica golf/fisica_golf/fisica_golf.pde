@@ -1,5 +1,5 @@
 import fisica.*;
-boolean wkey,akey,skey,dkey,upkey,downkey,rightkey,leftkey;
+boolean wkey,akey,skey,dkey,upkey,downkey,rightkey,leftkey, leftAiming, rightAiming;
 FWorld world;
 float vectorTheta1, vectorTheta2, vectorR1, vectorR2, vectorMag1, vectorMag2;
 color blue = #AFF4FF;
@@ -16,6 +16,7 @@ void draw(){
   background(blue);
   world.draw();
   world.step();
+  playerStates();
   
 }
 void createWorld(){
@@ -26,15 +27,16 @@ void createWorld(){
   
 }
 void createBodies(){
-  createBall();
+  createBall(leftBall, white);
+  createBall(rightBall, grey);
   createLeftPlayer();
   createRightPlayer();
   createCourse();
   
 }
-void createBall(){
-   FCircle ball = new FCircle(30);
-   ball.setFillColor(white);
+void createBall(FCircle b, Color c){
+   b = new FCircle(30);
+   ball.setFillColor(c);
    world.add(ball);
    
 }
