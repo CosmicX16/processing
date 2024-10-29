@@ -1,4 +1,4 @@
-class keyboard{
+
 void keyPressed(){
   if (key == 'w' || key == 'W') wkey= true;
   if (key == 's' || key == 'S') skey=true;
@@ -22,6 +22,4 @@ void keyReleased(){
   if (keyCode == RIGHT) rightkey = false;
   
   
-}
-
 }

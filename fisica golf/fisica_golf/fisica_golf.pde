@@ -1,8 +1,11 @@
 import fisica.*;
-boolean wkey,akey,skey,dkey,upkey,downkey,rightkey,leftkey, leftAiming, rightAiming;
+boolean wkey,akey,skey,dkey,upkey,downkey,rightkey,leftkey, leftAiming, rightAiming, pauseGameplay;
 FWorld world;
-float vectorTheta1, vectorTheta2, vectorR1, vectorR2, vectorMag1, vectorMag2;
+float vectorTheta1, vectorTheta2, vectorR1, vectorR2, vectorMag1,vectorMag2, rad,magCap;
+FCircle leftBall, rightBall;
 color blue = #AFF4FF;
+color darkBlue = #004AFF;
+color red = #FF0004;
 color green = #038B53;
 color grey = #989898;
 color white = #FAFAFA;
@@ -10,14 +13,16 @@ void setup(){
   fullScreen();
   createWorld();
   createBodies();
-  
+  rad = 0.0174533;
+  magCap = 150;
 }
 void draw(){
   background(blue);
+  
   world.draw();
   world.step();
-  playerStates();
-  
+  if(!pauseGameplay) players();
+  stageInit();
 }
 void createWorld(){
   Fisica.init(this);
@@ -26,18 +31,29 @@ void createWorld(){
   world.setEdges();
   
 }
+void stageInit(){
+  leftAiming = true;
+  
+}
 void createBodies(){
-  createBall(leftBall, white);
-  createBall(rightBall, grey);
+  createLeftBall(white);
+  createRightBall(grey);
   createLeftPlayer();
   createRightPlayer();
   createCourse();
   
 }
-void createBall(FCircle b, Color c){
-   b = new FCircle(30);
-   ball.setFillColor(c);
-   world.add(ball);
+void createLeftBall(color c){
+   leftBall = new FCircle(30);
+   leftBall.setFillColor(c);
+   world.add(leftBall);
+   
+}
+void createRightBall(color c){
+   rightBall = new FCircle(30);
+   rightBall.setFillColor(c);
+   rightBall.setPosition(40,height-100);
+   world.add(rightBall);
    
 }
 void createLeftPlayer(){
@@ -73,3 +89,16 @@ void createCourse(){
   world.add(ObsCourse);
   
 }
+
+void launchVector(FCircle c, FBox b, float r, float m, color C){
+      pushMatrix();
+      translate(c.getX(), c.getY());
+      rotate(r);
+      fill(C);
+      rect(30, -7.5,m,15); 
+      b.adjustRotation(r);
+      b.setPosition(m+30, -7.5 +15);
+      popMatrix();
+      
+}
+      
