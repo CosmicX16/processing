@@ -1,0 +1,5 @@
+12 holes per game
+
+camera switch between player each time
+
+each player controls one puck 
