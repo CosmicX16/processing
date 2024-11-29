@@ -1,23 +1,23 @@
 void players(){
     handlePlayerInput();
     playerStates();
-    
-  
+
 }
 
 void playerStates(){
-      if(leftAiming){
+      if(leftAiming && !pauseLeft){
         FBox leftPlayer = new FBox(20,40);
         leftPlayer.setFillColor(white);
         launchVector(leftBall , leftPlayer, vectorTheta1, vectorMag1, red);
         
       }
-      if(rightAiming){
+      if(rightAiming && !pauseRight){
         FBox rightPlayer = new FBox(20,40);
         rightPlayer.setFillColor(grey);
         launchVector(rightBall, rightPlayer, vectorTheta2, vectorMag2, darkBlue);
         
       }
+      
       v1 = Math.sqrt(leftBall.getVelocityX()*leftBall.getVelocityX() + leftBall.getVelocityY()*leftBall.getVelocityY());
       v2 = Math.sqrt(rightBall.getVelocityX()*rightBall.getVelocityX() + rightBall.getVelocityY()*rightBall.getVelocityY());
       if(!leftAiming && (hitBody(leftBall, Hole1)|| hitBody(leftBall, Hole2))  ) leftAiming = true;
@@ -45,21 +45,18 @@ void handlePlayerInput(){
       if(downkey && vectorMag2 > 0) vectorMag2 -= 3;
       
     }
-    if(ekey && leftAiming){
+    if(ekey && leftAiming && !pauseLeft){
       applyLeftSwing();
       ekey = false;
       leftAiming = false;
     }
-    if(slashkey && rightAiming){
+    if(slashkey && rightAiming && !pauseRight){
       applyRightSwing();
       slashkey = false;
       rightAiming = false;
     }
     
 }
-float coolLeft = 0;
-float coolRight = 0;
-
 void applyRightSwing(){
 
   //while(pauseGameplay){
@@ -67,7 +64,7 @@ void applyRightSwing(){
   //}
   float x = vectorMag2* (float) Math.cos(vectorTheta2);
   float y =  vectorMag2* (float)Math.sin(vectorTheta2);
-  rightBall.adjustVelocity(-x*5,-y*5);
+  rightBall.adjustVelocity(-x*7,-y*7);
   
   if(mode == 0) rightHoles1 ++;
   if(mode == 1) rightHoles2 ++;
@@ -77,7 +74,7 @@ void applyLeftSwing(){
   
   float x = vectorMag1* (float) Math.cos(vectorTheta1);
   float y =  vectorMag1* (float)Math.sin(vectorTheta1);
-  leftBall.adjustVelocity(-x*5,-y*5);
+  leftBall.adjustVelocity(-x*7,-y*7);
   
   if(mode == 0) leftHoles1 ++;
   if(mode == 1) leftHoles2++;
