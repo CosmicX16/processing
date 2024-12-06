@@ -6,7 +6,7 @@ class FBridge extends FGameObject {
    setName("bridge");
    attachImage(bridge);
    setStatic(true);
-    
+   
     
   }
   void action(){

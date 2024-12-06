@@ -2,25 +2,39 @@ import fisica.*;
 FWorld world;
 FPlayer player;
 ArrayList<FGameObject> terrain;
+ArrayList<FGameObject> enemies;
 
+int L, R;
 
 float zoom = 0.8;
 color grass = #000000;
+color grassWall = #3E3E3E;
 color dirt = #646764;
 color tram = #FF0000;
 color ice = #0000FF;
 color spike = #EAFF08;
 color treetrunk = #08FF2E;
+color treeleaf = #34FF9E;
+color treecenter = #47FCA6;
+color bridge = #898989;
+color lava = #8B0D0D;
+color goomba = #640000;
+color koopa = #006444;
+color boo = #046400;
+color hammerguy = #190064;
 boolean wkey,akey,skey,dkey,upkey,downkey,rightkey,leftkey, ekey, spacekey, flyMode,onGround;
 PImage map;
 int lives = 3;
 int gridSize = 32;
 void setup(){
-  fullScreen();
+  size(1000,1000);
   Fisica.init(this);
-  world = new FWorld(-2000,-2000,2000,2000);
+  world = new FWorld(-2000,-2000,10000,2000);
   terrain = new ArrayList<FGameObject>();
+  enemies = new ArrayList<FGameObject>();
   world.setGravity(0,900);
+  L = -1;
+  R = 1;
   flyMode = false;
   loadMap();
   loadPlayer();
@@ -38,16 +52,24 @@ void drawWorld(){
   scale(zoom);
   world.step();
   world.draw();
+  actWorld();
   popMatrix();
+  
 }
 void actWorld(){
   player.action();
   for(int i =0; i< terrain.size(); i++){
     FGameObject obj = terrain.get(i);
+    if(obj.getY()+obj.getHeight()/2 >= 2000) world.remove(obj);
     obj.action();
     
   }
-  
+  for(int i = 0; i < enemies.size(); i++){
+   FGameObject obj = enemies.get(i);
+   if(obj.getY()+obj.getHeight()/2 >= 2000) world.remove(obj);
+   obj.action();
+    
+  }
   
 }
 void loadPlayer(){
@@ -70,6 +92,18 @@ void loadMap(){
         b.setName("grass");
         b.setFriction(4);
         world.add(b);
+      }else if(c == grassWall){
+        FBox b = new FBox(gridSize,gridSize);
+        b.setPosition(x*gridSize,y*gridSize);
+        PImage p = loadImage("dirt_n.png");
+         b.attachImage(p);
+        b.setStatic(true);
+        b.setName("grassWall");
+        b.setFriction(4);
+        world.add(b);
+      
+      
+      
       }else if(c == dirt){
         FBox b = new FBox(gridSize,gridSize);
         b.setPosition(x*gridSize,y*gridSize);
@@ -84,7 +118,7 @@ void loadMap(){
         FBox b = new FBox(gridSize,gridSize);
         b.setPosition(x*gridSize,y*gridSize);
         b.attachImage(p);
-        b.setFriction(4);
+        b.setFriction(0.5);
         b.setStatic(true);
         b.setName("ice");
         world.add(b);
@@ -95,6 +129,7 @@ void loadMap(){
         b.setPosition(x*gridSize,y*gridSize);
         b.attachImage(p);
         b.setStatic(true);
+        b.setRestitution(2);
         b.setName("tramp");
         world.add(b);
         
@@ -117,15 +152,46 @@ void loadMap(){
         b.setName("tree_trunk");
         world.add(b);
         
-     // }else if (c == treeleaf){
-        //PImage p = loadImage("tree_trunk.png");
-       // FBox b = new FBox(gridSize,gridSize);
-       //b.setPosition(x*gridSize,y*gridSize);
-        //b.attachImage(p);
-        //b.setStatic(true);
-       // world.add(b);
+     }else if (c == treeleaf){
+       PImage p = loadImage("treetop_center.png");
+       FBox b = new FBox(gridSize,gridSize);
+       b.setPosition(x*gridSize,y*gridSize);
+       b.attachImage(p);
+       b.setStatic(true);
+       b.setName("tree_leaf");
+       world.add(b);
         
-      }
+     }else if (c == lava){
+       FLava b = new FLava(x*gridSize,y*gridSize);
+       world.add(b);
+       terrain.add(b);
+       b.setName("lava");
+     }else if (c == bridge){
+       FBridge b = new FBridge(x*gridSize,y*gridSize);
+       world.add(b);
+       terrain.add(b);
+       b.setName("bridge");
+     }else if (c == goomba){
+       FBridge b = new FBridge(x*gridSize,y*gridSize);
+       world.add(b);
+       terrain.add(b);
+       b.setName("goomba");
+     }else if (c == koopa){
+       FBridge b = new FBridge(x*gridSize,y*gridSize);
+       world.add(b);
+       terrain.add(b);
+       b.setName("koopa");
+     }else if (c == hammerguy){
+       FBridge b = new FBridge(x*gridSize,y*gridSize);
+       world.add(b);
+       terrain.add(b);
+       b.setName("hammerguy");
+     }else if (c == boo){
+       FBridge b = new FBridge(x*gridSize,y*gridSize);
+       world.add(b);
+       terrain.add(b);
+       b.setName("boo");
+     }
     }
   }
 }

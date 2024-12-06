@@ -34,19 +34,22 @@ class FPlayer extends FGameObject{
   }
   
   void action(){
-    
+    collision();
     input();
     animate();
-    if(isTouching("grass")){
+
+    
+    
+    
+  }
+  void collision(){
+    if(isTouching("grass") || isTouching("grassWall")|| isTouching("tram")|| isTouching("treeleaf")|| isTouching("bridge")){
       onGround = true;
     }else onGround = false;
     
     if(isTouching("spike")){
       
     }
-    
-    
-    
   }
   void animate(){
     if(frame >= action.length) frame= 0;
