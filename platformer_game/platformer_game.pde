@@ -19,6 +19,7 @@ color treecenter = #47FCA6;
 color bridge = #898989;
 color lava = #8B0D0D;
 color goomba = #640000;
+color thwomp = #86A1FF;
 color koopa = #006444;
 color boo = #046400;
 color hammerguy = #190064;
@@ -172,25 +173,29 @@ void loadMap(){
        terrain.add(b);
        b.setName("bridge");
      }else if (c == goomba){
-       FBridge b = new FBridge(x*gridSize,y*gridSize);
+       FGoomba b = new FGoomba(x*gridSize,y*gridSize);
        world.add(b);
-       terrain.add(b);
-       b.setName("goomba");
+       enemies.add(b);
+       
      }else if (c == koopa){
        FBridge b = new FBridge(x*gridSize,y*gridSize);
        world.add(b);
-       terrain.add(b);
-       b.setName("koopa");
+       enemies.add(b);
+   
      }else if (c == hammerguy){
        FBridge b = new FBridge(x*gridSize,y*gridSize);
        world.add(b);
-       terrain.add(b);
-       b.setName("hammerguy");
+       enemies.add(b);
+
      }else if (c == boo){
        FBridge b = new FBridge(x*gridSize,y*gridSize);
        world.add(b);
-       terrain.add(b);
-       b.setName("boo");
+       enemies.add(b);
+
+     }else if (c == thwomp){
+       FThwomp b = new FThwomp(x*gridSize,y*gridSize);
+       world.add(b);
+       enemies.add(b);
      }
     }
   }

@@ -24,7 +24,7 @@ class FGoomba extends FGameObject{
   }
   
   void collision(){
-    if(isTouching("wall")){
+    if(isTouching("grassWall") || isTouching("goomba")){
       direction *= -1;
       setPosition(getX()+direction, getY());
     }
