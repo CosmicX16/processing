@@ -4,9 +4,9 @@ class FPlayer extends FGameObject{
   int frame;
   PImage[] action;
   PImage[] fly, runLeft, runRight, idle;
-  
+  boolean inHarm;
    //images
-  
+  FCircle hitbox;
   
   FPlayer(){
     super(); 
@@ -14,7 +14,7 @@ class FPlayer extends FGameObject{
     setName("Player");
     setRotatable(false);
     setFillColor(#FFED21);
-    
+
     frame = 0;
     fly = new PImage[3];
     fly[0] = loadImage("midflap.png");
@@ -34,22 +34,35 @@ class FPlayer extends FGameObject{
   }
   
   void action(){
+  
     collision();
     input();
     animate();
-
+    
     
     
     
   }
   void collision(){
-    if(isTouching("grass") || isTouching("grassWall")|| isTouching("tram")|| isTouching("treeleaf")|| isTouching("bridge")){
+    if(isTouching("ground")){
       onGround = true;
     }else onGround = false;
     
-    if(isTouching("spike")){
+    if(isTouching("harm")){
       
     }
+    if(isTouching("harmKill")){
+      FBody g = touchingObj("harmKill");
+      if(!(Math.abs(g.getX() - getX()) < 30 && g.getY() > getY())) inHarm = true;
+      else inHarm = false;
+    }
+    
+    
+    if(inHarm){
+      
+      
+    }
+    
   }
   void animate(){
     if(frame >= action.length) frame= 0;

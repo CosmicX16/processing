@@ -1,45 +1,49 @@
-/* class FGoomba extends FGameObject{
-  PImage[] goombaL = new PImage[2];
-  PImage[] goombaR = new PImage[2];
+class FHammerBro extends FGameObject{
+  PImage[] hammerbroL = new PImage[2];
+  PImage[] hammerbroR = new PImage[2];
   int direction = L;
   int speed = 50;
   int frame = 0;
-  FGoomba(float x, float y){
+  FBox hammer;
+  FHammerBro(float x, float y){
    super();
    setPosition(x,y);
-   setName("goomba");
+   setHeight(gridSize*2);
+   setName("harmKill");
    setRotatable(false);
-   goombaL[0] = loadImage("goomba0.png");
-   goombaL[1] = loadImage("goomba1.png");
-   goombaR[0] = loadImage("goomba1.png");
-   goombaR[1] = loadImage("goomba0.png");
+   
+   hammerbroL[0] = loadImage("hammerbro0.png");
+   hammerbroL[1] = loadImage("hammerbro1.png");
+   hammerbroR[0] = loadImage("hammerbro2.png");
+   hammerbroR[1] = loadImage("hammerbro3.png");
   }
   
   void action(){
     animate();
     collision();
     move();
-    
+    die();
     
   }
   
   void collision(){
-    if(isTouching("wall")){
+    if(isTouching("wall") || touchingOther("harmKill") ){
       direction *= -1;
       setPosition(getX()+direction, getY());
     }
+    if(isTouching("Player") && Math.abs(getX() - player.getX()) < gridSize && getY() > player.getY() ) death = true;
   }
   void animate(){
-    if(frame >= goombaR.length) frame= 0;
+    if(frame >= hammerbroR.length) frame= 0;
     if (frameCount%5 == 0){
-     if(direction == L) attachImage(goombaL[frame]);
-     if(direction == R) attachImage(goombaR[frame]);
+     if(direction == L) attachImage(hammerbroL[frame]);
+     if(direction == R) attachImage(hammerbroR[frame]);
      frame++;
     }
     
   }
   void move(){
-    setVelocity(10*direction, getVelocityY());
+    setVelocity(speed*direction, getVelocityY());
     
   }
   
@@ -47,4 +51,3 @@
   
   
 }
-*/

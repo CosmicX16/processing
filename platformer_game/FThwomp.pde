@@ -1,6 +1,7 @@
 class FThwomp extends FGameObject{
   PImage[] thwomp = new PImage[2];
   boolean angry = false;
+  boolean state = false;
   int speed;
   int frame;
   float initX;
@@ -14,7 +15,7 @@ class FThwomp extends FGameObject{
    setHeight(gridSize*2);
    speed = 50;
    frame =0;
-   setName("thwomp");
+   setName("harm");
    setRotatable(false);
    setStatic(true);
    thwomp[0] = loadImage("thwomp0.png");
@@ -43,11 +44,17 @@ class FThwomp extends FGameObject{
   }
   void move(){
     if(angry) {
+      state = false;
       setStatic(false);
       setVelocity(0, 600);
-    }else if(getY() != initY) setVelocity(0,-100);
-
-    if(getY() == initY && !angry){
+    }else if(getY() > initY && isTouching("ground"))
+    {
+      setVelocity(0,-100);
+      state = true;
+    }
+    if(getY() > initY && state) setVelocity(0,-100);
+    if(getY() <= initY && !angry){
+      state = false;
       setVelocity(0,0);
       setStatic(true);
     }

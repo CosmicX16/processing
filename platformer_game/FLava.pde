@@ -2,13 +2,16 @@ import java.util.*;
 class FLava extends FGameObject {
   PImage[] lava = new PImage[6];
   int frame;
+  boolean death;
   FLava(float x, float y){
    super();
+   setHeight(gridSize*0.55);
    setPosition(x,y);
+   setStatic(true);
    setName("lava");
    
    setStatic(true);
-   frame = (int)( Math.random()*6) ;
+   frame = (int)( Math.random()*5) ;
    lava[0] = loadImage("lava0.png");
    lava[1] = loadImage("lava1.png");
    lava[2] = loadImage("lava2.png");
@@ -18,13 +21,12 @@ class FLava extends FGameObject {
   }
   void action(){
     animate();
-    if(isTouching("Player")){
-     
-    }
+    
   }
+  
   void animate(){
     if(frame >= lava.length) frame= 0;
-    if (frameCount%6 == 0){
+    if (frameCount%10 == 0){
      attachImage(lava[frame]);
      frame++;
     }
@@ -34,5 +36,4 @@ class FLava extends FGameObject {
   
 
   
-  
-}
+ } 

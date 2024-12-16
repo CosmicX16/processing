@@ -1,45 +1,49 @@
-/*class FGoomba extends FGameObject{
-  PImage[] goombaL = new PImage[2];
-  PImage[] goombaR = new PImage[2];
+class FKoopa extends FGameObject{
+  PImage[] koopaL = new PImage[2];
+  PImage[] koopaR = new PImage[3];
   int direction = L;
   int speed = 50;
   int frame = 0;
-  FGoomba(float x, float y){
+  boolean death;
+  FKoopa(float x, float y){
    super();
    setPosition(x,y);
-   setName("goomba");
+   setHeight(gridSize*2);
+   setName("harmKill");
    setRotatable(false);
-   goombaL[0] = loadImage("goomba0.png");
-   goombaL[1] = loadImage("goomba1.png");
-   goombaR[0] = loadImage("goomba1.png");
-   goombaR[1] = loadImage("goomba0.png");
+   koopaL[0] = loadImage("goomba0.png");
+
   }
   
   void action(){
     animate();
     collision();
     move();
-    
+    die();
     
   }
   
   void collision(){
-    if(isTouching("wall")){
+    if(isTouching("wall") || touchingOther("harmKill") ){
       direction *= -1;
       setPosition(getX()+direction, getY());
     }
+    if(isTouching("Player") && Math.abs(getX() - player.getX()) < gridSize && getY() > player.getY() ){
+      death = true;
+      
+    }
   }
   void animate(){
-    if(frame >= goombaR.length) frame= 0;
+    if(frame >= koopaL.length) frame= 0;
     if (frameCount%5 == 0){
-     if(direction == L) attachImage(goombaL[frame]);
-     if(direction == R) attachImage(goombaR[frame]);
+     if(direction == L) attachImage(koopaL[frame]);
+     if(direction == R) attachImage(koopaR[frame]);
      frame++;
     }
     
   }
   void move(){
-    setVelocity(10*direction, getVelocityY());
+    setVelocity(speed*direction, getVelocityY());
     
   }
   
@@ -47,4 +51,3 @@
   
   
 }
-*/
