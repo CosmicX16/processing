@@ -29,7 +29,7 @@
       direction *= -1;
       setPosition(getX()+direction, getY());
     }
-    if(isTouching("Player") && Math.abs(getX() - player.getX()) < gridSize && getY() > player.getY() ) death = true;
+    if(isTouching("Player") && Math.abs(getX() - player.getX()) <= gridSize/2 && getY() > player.getY() ) death = true;
   }
   void animate(){
     if(frame >= goombaR.length) frame= 0;

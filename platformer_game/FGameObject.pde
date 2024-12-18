@@ -4,6 +4,7 @@ class FGameObject extends FBox {
   FGameObject(){
      super(gridSize, gridSize);
      death = false;
+     setFriction(0.3);
   }
   
   void action(){
@@ -58,7 +59,7 @@ class FGameObject extends FBox {
   void die(){
     
     if (death) {
-      println("working");
+      
       setStatic(true);
       deathframe += 3;
       setImageAlpha(map(deathframe, 0, 100, 255, 0));
@@ -70,7 +71,7 @@ class FGameObject extends FBox {
   void dieDrop(){
     
     if (death) {
-      println("working");
+      
       setStatic(true);
       deathframe += 3;
       setImageAlpha(map(deathframe, 0, 100, 255, 0));

@@ -3,7 +3,7 @@ FWorld world;
 FPlayer player;
 ArrayList<FGameObject> terrain;
 ArrayList<FGameObject> enemies;
-
+ArrayList<FBox> projectiles;
 int L, R;
 
 float zoom = 0.8;
@@ -33,6 +33,7 @@ void setup(){
   world = new FWorld(-2000,-2000,10000,2000);
   terrain = new ArrayList<FGameObject>();
   enemies = new ArrayList<FGameObject>();
+  projectiles = new ArrayList<FBox>();
   world.setGravity(0,900);
   L = -1;
   R = 1;
@@ -71,7 +72,12 @@ void actWorld(){
    obj.action();
     
   }
-  
+  for(int i =0; i< projectiles.size(); i++){
+    FBox obj = projectiles.get(i);
+    if(obj.getY()+obj.getHeight()/2 >= 2000) world.remove(obj);
+    
+    
+  }
 }
 void loadPlayer(){
   player = new FPlayer();
@@ -90,7 +96,7 @@ void loadMap(){
         PImage p = loadImage("dirt_n.png");
          b.attachImage(p);
         b.setStatic(true);
-        b.setName("grass");
+        b.setName("ground");
         b.setFriction(4);
         world.add(b);
       }else if(c == grassWall){
@@ -99,7 +105,7 @@ void loadMap(){
         PImage p = loadImage("dirt_n.png");
          b.attachImage(p);
         b.setStatic(true);
-        b.setName("grassWall");
+        b.setName("wall");
         b.setFriction(4);
         world.add(b);
       
@@ -131,7 +137,7 @@ void loadMap(){
         b.attachImage(p);
         b.setStatic(true);
         b.setRestitution(2);
-        b.setName("tramp");
+        b.setName("ground");
         world.add(b);
         
       }else if(c == spike){
@@ -140,21 +146,21 @@ void loadMap(){
         b.setPosition(x*gridSize,y*gridSize);
         b.attachImage(p);
         b.setStatic(true);
-        b.setName("spike");
+        b.setName("harm");
         world.add(b);
         
       }else if (c == treetrunk){
-        PImage p = loadImage("tree_trunk.png");
+        PImage p = loadImage("pipetop.png");
         FBox b = new FBox(gridSize,gridSize);
         b.setPosition(x*gridSize,y*gridSize);
         b.attachImage(p);
         b.setSensor(true);
         b.setStatic(true);
-        b.setName("tree_trunk");
+        b.setName("background");
         world.add(b);
         
      }else if (c == treeleaf){
-       PImage p = loadImage("treetop_center.png");
+       PImage p = loadImage("pipetrunk.png");
        FBox b = new FBox(gridSize,gridSize);
        b.setPosition(x*gridSize,y*gridSize);
        b.attachImage(p);
@@ -166,24 +172,24 @@ void loadMap(){
        FLava b = new FLava(x*gridSize,y*gridSize);
        world.add(b);
        terrain.add(b);
-       b.setName("lava");
+       b.setName("harm");
      }else if (c == bridge){
        FBridge b = new FBridge(x*gridSize,y*gridSize);
        world.add(b);
        terrain.add(b);
-       b.setName("bridge");
+       b.setName("ground");
      }else if (c == goomba){
        FGoomba b = new FGoomba(x*gridSize,y*gridSize);
        world.add(b);
        enemies.add(b);
        
      }else if (c == koopa){
-       FBridge b = new FBridge(x*gridSize,y*gridSize);
+       FKoopa b = new FKoopa(x*gridSize,y*gridSize);
        world.add(b);
        enemies.add(b);
    
      }else if (c == hammerguy){
-       FBridge b = new FBridge(x*gridSize,y*gridSize);
+       FHammerBro b = new FHammerBro(x*gridSize,y*gridSize);
        world.add(b);
        enemies.add(b);
 

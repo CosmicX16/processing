@@ -14,7 +14,7 @@ class FPlayer extends FGameObject{
     setName("Player");
     setRotatable(false);
     setFillColor(#FFED21);
-
+    setFriction(0.3);
     frame = 0;
     fly = new PImage[3];
     fly[0] = loadImage("midflap.png");
@@ -49,17 +49,18 @@ class FPlayer extends FGameObject{
     }else onGround = false;
     
     if(isTouching("harm")){
-      
+      inHarm = true;
     }
     if(isTouching("harmKill")){
+      //can only touch one obj at a time to detect properly
       FBody g = touchingObj("harmKill");
-      if(!(Math.abs(g.getX() - getX()) < 30 && g.getY() > getY())) inHarm = true;
-      else inHarm = false;
+      if(!(Math.abs(g.getX() - getX()) <= gridSize/2 && g.getY() > getY())) inHarm = true;
+      
     }
-    
+    else inHarm = false;
     
     if(inHarm){
-      
+      println("working" + millis());
       
     }
     

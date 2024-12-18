@@ -28,7 +28,7 @@ class FKoopa extends FGameObject{
       direction *= -1;
       setPosition(getX()+direction, getY());
     }
-    if(isTouching("Player") && Math.abs(getX() - player.getX()) < gridSize && getY() > player.getY() ){
+    if(isTouching("Player") && Math.abs(getX() - player.getX()) <= gridSize/2 && getY() > player.getY() ){
       death = true;
       
     }
