@@ -10,7 +10,7 @@ void keyPressed(){
   if (keyCode == DOWN) downkey = true;
   if (keyCode == LEFT) leftkey = true;
   if (keyCode == RIGHT) rightkey = true;
-  
+  if(keyCode == TAB) tabkey = true;
 }
 
 void keyReleased(){
@@ -25,5 +25,5 @@ void keyReleased(){
    if (keyCode == LEFT) leftkey = false;
   if (keyCode == RIGHT) rightkey = false;
   
-  
+  if(keyCode == TAB) tabkey = false;
 }

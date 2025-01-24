@@ -31,10 +31,10 @@ class FHammerBro extends FGameObject{
   }
   
   void collision(){
-    
+    if(isTouching("harm")) death = true;
     if(player.getX() < getX()) direction = L;
     else direction = R;
-    if(isTouching("Player") && Math.abs(getX() - player.getX()) <= gridSize/2 && getY() > player.getY() ) death = true;
+    if(isTouching("Player") && Math.abs(getX() - player.getX()) <= gridSize/2 +15 && getY() > player.getY() ) death = true;
   }
   void hammers(){
     

@@ -2,17 +2,17 @@ class FShell extends FGameObject{
   PImage[] shell = new PImage[2];
   
   int direction = L;
-  int speed = 150;
+  int speed = 180;
   int frame = 0;
-  boolean death;
   FShell(float x, float y){
    super();
    setPosition(x,y);
    setName("harmKill");
    setRotatable(false);
-   shell[0] = loadImage("goomba0.png");
-   shell[1] = loadImage("goomba1.png");
-
+   setFriction(-4);
+   shell[0] = loadImage("shellR.png");
+   shell[1] = loadImage("shellL.png");
+   
   }
   
   void action(){
@@ -24,21 +24,23 @@ class FShell extends FGameObject{
   }
   
   void collision(){
-    if(isTouching("wall") || touchingOther("harmKill") || touchingOther("harm")){
+    if(isTouching("wall") || touchingOther("harmKill") || isTouching("Player")){
       direction *= -1;
       setPosition(getX()+direction, getY());
     }
-    if(isTouching("Player") && Math.abs(getX() - player.getX()) < gridSize && getY() > player.getY() ) death = true;
+    if(isTouching("harm")) death = true;
+    if(isTouching("Player") && Math.abs(getX() - player.getX()) <= gridSize/2 + 15 && getY()+gridSize > player.getY()  ) death = true;
   }
   void animate(){
-    if(frame >= shell.length) frame= 0;
-    if (frameCount%5 == 0){
-     attachImage(shell[frame]);
-     frame++;
-    }
+    if(direction == L) attachImage(shell[1]);
+    else attachImage(shell[0]);
     
   }
   void move(){
+    if(isTouching("Player")){
+     if(player.getVelocityX() > 0 ) setVelocity(speed, 0);
+     else setVelocity(-speed,0);
+   }else adjustVelocity(0,0);
     setVelocity(speed*direction, getVelocityY());
     
   }

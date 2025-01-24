@@ -8,7 +8,10 @@ class FGameObject extends FBox {
   }
   
   void action(){
-    
+    if(tabkey){
+      println("work");
+      circle(getX(),getY(), 20);
+    }
     
     
   }
@@ -80,6 +83,9 @@ class FGameObject extends FBox {
       world.remove(this);
       FShell s = new FShell(getX(),getY());
       world.add(s);
+      enemies.add(s);
+      deathframe = 0;
+      death = false;
     }
     
   }

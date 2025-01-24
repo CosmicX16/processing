@@ -25,12 +25,13 @@
   }
   
   void collision(){
-    if(isTouching("wall") || touchingOther("harmKill") ){
+    if(isTouching("harm")) death = true;
+    if(isTouching("wall") || touchingOther("harmKill")|| isTouching("Player") ){
       direction *= -1;
       setPosition(getX()+direction, getY());
     }
-    if(isTouching("Player") && Math.abs(getX() - player.getX()) <= gridSize/2 && getY() > player.getY() ) death = true;
-  }
+    if(isTouching("Player") && Math.abs(getX() - player.getX()) <= gridSize/2 + 15 && getY() > player.getY() ) death = true;
+    }
   void animate(){
     if(frame >= goombaR.length) frame= 0;
     if (frameCount%5 == 0){

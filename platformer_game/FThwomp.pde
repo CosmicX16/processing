@@ -13,7 +13,7 @@ class FThwomp extends FGameObject{
    initY = y;
    setWidth(gridSize*2);
    setHeight(gridSize*2);
-   speed = 50;
+   speed = 30;
    frame =0;
    setName("harm");
    setRotatable(false);
@@ -33,7 +33,7 @@ class FThwomp extends FGameObject{
   }
   
   void collision(){
-    if(Math.abs((getX() - player.getX())) < 42){
+    if(Math.abs((getX() - player.getX())) < 42 && !player.invuln()){
       angry = true;
     }else angry = false;
   }
@@ -49,7 +49,7 @@ class FThwomp extends FGameObject{
       setVelocity(0, 600);
     }else if(getY() > initY && isTouching("ground"))
     {
-      setVelocity(0,-100);
+      setVelocity(0,-80);
       state = true;
     }
     if(getY() > initY && state) setVelocity(0,-100);
